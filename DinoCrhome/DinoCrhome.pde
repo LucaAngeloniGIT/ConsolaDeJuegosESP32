@@ -1,11 +1,3 @@
-/*
- * JUEGO DEL DINOSAURIO ESTILO DIBUJO MATEMÁTICO
- * - Contornos negros
- * - Formas simples
- * - Estilo de dibujo lineal
- */
-
-// Variables del juego
 float dinoY, dinoVel;
 boolean saltando = false;
 boolean agachado = false;
