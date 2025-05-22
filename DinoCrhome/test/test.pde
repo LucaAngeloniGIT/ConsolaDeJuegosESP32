@@ -1,6 +1,7 @@
-PImage dinoImg;        // Imagen del dinosaurio normal
-PImage dinoAgachadoImg; // Imagen del dinosaurio agachado
+PImage Dino;        // Imagen del dinosaurio normal
+PImage DinoAgachado; // Imagen del dinosaurio agachado
 PImage cactusImg;      // Imagen del cactus
+PImage Piso;
 
 // Variables del juego
 float dinoY, dinoVel;
@@ -25,14 +26,14 @@ void setup() {
   size(128, 160);
   
   // Cargar imágenes (deben estar en la carpeta 'data')
-  dinoImg = loadImage("dino.jpg");
-  dinoAgachadoImg = loadImage("dino_agachado.jpg");
+  Dino = loadImage("dino.jpg");
+  Dino.resize(AnchoDino, AlturaDino);
+  DinoAgachado = loadImage("dino_agachado.jpg");
+  DinoAgachado.resize(AnchoDinoAgachado, AltoDinoAgachado);
   cactusImg = loadImage("cactus.jpg"); // Nueva imagen para cactus
-  
-  // Redimensionar imágenes
-  dinoImg.resize(AnchoDino, AlturaDino);
-  dinoAgachadoImg.resize(AnchoDinoAgachado, AltoDinoAgachado);
   cactusImg.resize(AnchoCactus, AltoCactus);
+  Piso = loadImage("piso.jpg");
+  Piso.resize(128,10);
   
   // Posición inicial
   dinoY = height - AlturaDino - 20; // 20 es la altura del suelo
@@ -65,9 +66,9 @@ void draw() {
 
 void dibujarDino() {
   if (agachado) {
-    image(dinoAgachadoImg, 20, dinoY + (AlturaDino - AltoDinoAgachado));
+    image(DinoAgachado, 20, dinoY + (AlturaDino - AltoDinoAgachado));
   } else {
-    image(dinoImg, 20, dinoY);
+    image(Dino, 20, dinoY);
   }
 }
 
@@ -94,7 +95,8 @@ void actualizarDino() {
 
 void dibujarSuelo() {
   stroke(0);
-  line(0, height-20, width, height-20);
+  image(Piso,0,height - 20);
+  //line(0, , width, height-20);
 }
 
 void actualizarCactus() {
@@ -118,10 +120,7 @@ void actualizarPuntos() {
 
 void verificarColision() {
   for (int i = 0; i < cactusX.length; i++) {
-    if (20 < cactusX[i] + AnchoCactus && 
-        20 + (agachado ? AnchoDinoAgachado : AnchoDino) > cactusX[i] && 
-        dinoY < height - 20 && 
-        dinoY + (agachado ? AltoDinoAgachado : AlturaDino) > height - AltoCactus - 20) {
+    if (20 < cactusX[i] + AnchoCactus && 20 + (agachado ? AnchoDinoAgachado : AnchoDino) > cactusX[i] && dinoY < height - 20 && dinoY + (agachado ? AltoDinoAgachado : AlturaDino) > height - AltoCactus - 20) {
       gameOver = true;
     }
   }
@@ -136,9 +135,9 @@ void dibujarPuntos() {
 void dibujarGameOver() {
   fill(0);
   textSize(14);
-  text("GAME OVER", width/2 - 35, height/2);
+  text("Perdiste puto", width/2 - 35, height/2);
   textSize(10);
-  text("Press R", width/2 - 20, height/2 + 20);
+  text("Toca la R wachin", width/2 - 30, height/2 + 20);
 }
 
 void keyPressed() {
